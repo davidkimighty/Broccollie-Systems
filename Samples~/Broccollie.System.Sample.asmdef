@@ -1,0 +1,17 @@
+{
+    "name": "Broccollie.System.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9018b00fefbd64782bb938c28a0195c6",
+        "GUID:690a834c4515e4bbda3de4a506440e64"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

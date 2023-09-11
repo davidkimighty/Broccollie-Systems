@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Broccollie.System
 {
-    [CreateAssetMenu(fileName = "AssetScene", menuName = "Broccollie/System/Preset/AssetScene")]
+    [CreateAssetMenu(fileName = "AssetScene", menuName = "Broccollie/System/AssetScene")]
     public class AssetScenePreset : ScriptableObject
     {
         private string _sceneName = null;

@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Threading;
 using System.Threading.Tasks;
 using Broccollie.Core;
 using UnityEngine;
@@ -10,14 +9,8 @@ namespace Broccollie.System
 {
     public class LocalSaveController : MonoBehaviour
     {
-        #region Variable Field
-        [Header("Event Channels")]
         [SerializeField] private LocalSaveEventChannel _eventChannel = null;
-
-        [Header("Data")]
         [SerializeField] private LocalSaveOptionsPreset _preset = null;
-
-        #endregion
 
         private void OnEnable()
         {
@@ -65,7 +58,6 @@ namespace Broccollie.System
 
         #endregion
 
-        #region Private Functions
         private async Task SaveSaveablesAsync()
         {
             LocalSaveableEntity[] saveables = FindObjectsOfType<LocalSaveableEntity>();
@@ -191,7 +183,5 @@ namespace Broccollie.System
                 Helper.Log("Data saved", Helper.Broccollie, this);
             }
         }
-
-        #endregion
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine.AddressableAssets;
 
 namespace Broccollie.System.Scene.Addressables
 {
-    [CreateAssetMenu(fileName = "AddressableScene", menuName = "Broccollie/System/Preset/AddressableScene")]
+    [CreateAssetMenu(fileName = "AddressableScene", menuName = "Broccollie/System/AddressableScene")]
     public class AddressableScenePreset : ScriptableObject
     {
         public AssetReference SceneReference = null;

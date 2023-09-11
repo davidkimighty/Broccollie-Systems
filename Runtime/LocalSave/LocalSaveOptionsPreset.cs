@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Broccollie.System
 {
-    [CreateAssetMenu(fileName = "LocalSaveOptions", menuName = "Broccollie/System/Local Save Options")]
+    [CreateAssetMenu(fileName = "LocalSaveOptions", menuName = "Broccollie/System/LocalSaveOptions")]
     public class LocalSaveOptionsPreset : ScriptableObject
     {
         public LocalSaveOptions Options;

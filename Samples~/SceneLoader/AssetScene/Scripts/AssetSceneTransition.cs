@@ -7,39 +7,25 @@ public class AssetSceneTransition : MonoBehaviour
     [SerializeField] private AssetSceneEventChannel _eventChannel = null;
     [SerializeField] private AssetScenePreset _sceneOne = null;
     [SerializeField] private AssetScenePreset _sceneTwo = null;
+    [SerializeField] private AssetScenePreset _sceneLoading = null;
 
     [SerializeField] private ScreenFader _fader = null;
 
     private async void Awake()
     {
-        await _eventChannel.RequestSceneLoadAsync(_sceneOne, false);
+        DontDestroyOnLoad(this.gameObject);
 
-        await _eventChannel.RequestSceneLoadAsync(_sceneTwo, true);
-    }
+        await Task.Delay(3000);
 
-    private void OnEnable()
-    {
-        _eventChannel.OnBeforeSceneUnloadAsync += FadeIn;
-        _eventChannel.OnAfterLoadingSceneLoadAsync += FadeOut;
-        _eventChannel.OnBeforeLoadingSceneUnloadAsync += FadeIn;
-        _eventChannel.OnAfterSceneLoadAsync += FadeOut;
-    }
-
-    private void OnDisable()
-    {
-        _eventChannel.OnBeforeSceneUnloadAsync -= FadeIn;
-        _eventChannel.OnAfterLoadingSceneLoadAsync -= FadeOut;
-        _eventChannel.OnBeforeLoadingSceneUnloadAsync -= FadeIn;
-        _eventChannel.OnAfterSceneLoadAsync -= FadeOut;
-    }
-
-    private async Task FadeIn(AssetScenePreset preset)
-    {
         await _fader.FadeAsync(1);
-    }
+        await _eventChannel.RequestSceneLoadAsync(_sceneLoading);
+        await _fader.FadeAsync(0);
 
-    private async Task FadeOut(AssetScenePreset preset)
-    {
+        await Task.Delay(3000);
+
+        await _fader.FadeAsync(1);
+        await _eventChannel.RequestSceneLoadAsync(_sceneTwo);
         await _fader.FadeAsync(0);
     }
+
 }

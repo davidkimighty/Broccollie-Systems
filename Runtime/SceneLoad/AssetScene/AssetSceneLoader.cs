@@ -5,14 +5,9 @@ using UnityEngine.SceneManagement;
 
 namespace Broccollie.System
 {
-    [DefaultExecutionOrder(-100)]
     public class AssetSceneLoader : MonoBehaviour
     {
-        [SerializeField] private AssetSceneEventChannel _eventChannel = null;
-        [SerializeField] private AssetScenePreset _loadingScene = null;
-        [SerializeField] private AssetScenePreset _persistentScene = null;
-
-        private AssetScenePreset _currentlyLoadedScene = null;
+        [SerializeField] private AssetSceneEventChannel _eventChannel;
 
         private void OnEnable()
         {
@@ -25,61 +20,21 @@ namespace Broccollie.System
         }
 
         #region Subscribers
-        private async Task SceneLoadAsync(AssetScenePreset scene, bool showLoading)
+        private async Task SceneLoadAsync(AssetScenePreset scene)
         {
-            await UnloadSceneAsync(showLoading);
+            await UnloadSceneAsync();
             await LoadSceneAsync(scene);
         }
 
         #endregion
 
         #region Public Functions
-        public async Task UnloadSceneAsync(bool showLoading)
+        public async Task UnloadSceneAsync()
         {
-            if (_currentlyLoadedScene != null)
-            {
-                _eventChannel.RaiseBeforeSceneUnload(_currentlyLoadedScene);
-                await _eventChannel.RaiseBeforeSceneUnloadAsync(_currentlyLoadedScene);
-            }
-            await UnloadActiveSceneAsync();
-
-            if (showLoading)
-            {
-                _currentlyLoadedScene = _loadingScene;
-                await LoadNewSceneAsync(_loadingScene);
-
-                _eventChannel.RaiseAfterLoadingSceneLoad(_loadingScene);
-                await _eventChannel.RaiseAfterLoadingSceneLoadAsync(_loadingScene);
-            }
-        }
-
-        public async Task LoadSceneAsync(AssetScenePreset scene)
-        {
-            if (_currentlyLoadedScene == _loadingScene)
-            {
-                _eventChannel.RaiseBeforeLoadingSceneUnload(_loadingScene);
-                await _eventChannel.RaiseBeforeLoadingSceneUnloadAsync(_loadingScene);
-
-                await UnloadActiveSceneAsync();
-            }
-
-            _currentlyLoadedScene = scene;
-            await LoadNewSceneAsync(scene);
-
-            _eventChannel.RaiseAfterSceneLoad(_currentlyLoadedScene);
-            await _eventChannel.RaiseAfterSceneLoadAsync(_currentlyLoadedScene);
-        }
-
-        #endregion
-
-        private async Task UnloadActiveSceneAsync()
-        {
-            if (_currentlyLoadedScene == null ||
-                (_persistentScene != null && _currentlyLoadedScene.SceneName == _persistentScene.SceneName)) return;
-
             try
             {
-                AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(_currentlyLoadedScene.SceneName);
+                UnityEngine.SceneManagement.Scene activeScene = SceneManager.GetActiveScene();
+                AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(activeScene);
                 if (unloadOperation == null) return;
 
                 while (!unloadOperation.isDone)
@@ -95,11 +50,11 @@ namespace Broccollie.System
             }
         }
 
-        private async Task LoadNewSceneAsync(AssetScenePreset scene)
+        public async Task LoadSceneAsync(AssetScenePreset scene)
         {
             try
             {
-                AsyncOperation loadOperation = SceneManager.LoadSceneAsync(scene.SceneName, LoadSceneMode.Additive);
+                AsyncOperation loadOperation = SceneManager.LoadSceneAsync(scene.SceneName);
                 if (loadOperation == null) return;
 
                 while (!loadOperation.isDone)
@@ -114,5 +69,7 @@ namespace Broccollie.System
                 Debug.LogException(e);
             }
         }
+
+        #endregion
     }
 }

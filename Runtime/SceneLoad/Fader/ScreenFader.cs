@@ -8,12 +8,12 @@ namespace Broccollie.System
 {
     public class ScreenFader : MonoBehaviour
     {
-        [SerializeField] private FaderEventChannel _eventChannel = null;
-        [SerializeField] private Image _fadeImage = null;
+        [SerializeField] private FaderEventChannel _eventChannel;
+        [SerializeField] private Image _fadeImage;
         [SerializeField] private float _fadeDuration = 1f;
-        [SerializeField] private AnimationCurve _fadeCurve = null;
+        [SerializeField] private AnimationCurve _fadeCurve;
 
-        private IEnumerator _fadeCoroutine = null;
+        private IEnumerator _fadeCoroutine;
 
         private void OnEnable()
         {

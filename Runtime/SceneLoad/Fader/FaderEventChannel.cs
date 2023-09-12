@@ -7,8 +7,8 @@ namespace Broccollie.System
     [CreateAssetMenu(fileName = "EventChannel_Fader", menuName = "Broccollie/EventChannels/Fader")]
     public class FaderEventChannel : ScriptableObject
     {
-        public event Action<float> OnFade = null;
-        public event Func<float, Task> OnFadeAsync = null;
+        public event Action<float> OnFade;
+        public event Func<float, Task> OnFadeAsync;
 
         #region Publishers
         public void RequestFade(float alpha)

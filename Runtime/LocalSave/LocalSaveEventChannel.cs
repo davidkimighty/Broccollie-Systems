@@ -7,8 +7,8 @@ namespace Broccollie.System
     [CreateAssetMenu(fileName = "EventChannel_LocalSave", menuName = "Broccollie/EventChannels/LocalSave")]
     public class LocalSaveEventChannel : ScriptableObject
     {
-        public event Func<Task> OnSaveAsync = null;
-        public event Func<Task> OnLoadAsync = null;
+        public event Func<Task> OnSaveAsync;
+        public event Func<Task> OnLoadAsync;
 
         #region Publishers
         public async Task RequestSaveAsync() => await OnSaveAsync?.Invoke();

@@ -8,7 +8,7 @@ namespace Broccollie.System.Scene.Addressables
     {
         public AssetReference SceneReference = null;
 
-        private string _sceneName = null;
+        [SerializeField] private string _sceneName = null;
         public string SceneName
         {
             get => _sceneName;

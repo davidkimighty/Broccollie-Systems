@@ -6,7 +6,7 @@ namespace Broccollie.System
     [CreateAssetMenu(fileName = "AssetScene", menuName = "Broccollie/System/AssetScene")]
     public class AssetScenePreset : ScriptableObject
     {
-        private string _sceneName = null;
+        [SerializeField] private string _sceneName = null;
         public string SceneName
         {
             get => _sceneName;

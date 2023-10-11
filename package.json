@@ -1,6 +1,6 @@
 {
-  "name": "com.hyunwookimbob.broccollie.system",
-  "version": "0.1.4",
+  "name": "com.davidkimighty.broccollie.system",
+  "version": "0.1.5",
   "displayName": "Broccollie System",
   "description": "System related features.",
   "unity": "2022.3",
